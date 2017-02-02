@@ -9,11 +9,13 @@ func main() {
 
 	a := [11]int{6, 2, 3, 5, 10, 8, 12, 1, 0, 7, 4}
 
-	//b := [10]int{}
+	b := []int{}
 
-	divide(a[0:])
-	fmt.Println(divide(a[0:]))
-	fmt.Println(a)
+	b = divide(a[0:])
+	//b = a[0:3]
+
+	fmt.Println("a", a)
+	fmt.Println("b", b)
 
 
 }
@@ -24,24 +26,67 @@ func divide(anArray []int) []int {
 
 	length := len(anArray)
 
-	if length == 0 {
+	if length < 2 {
 		return anArray
 	}
 
-	fmt.Println("len:", length)
-	fmt.Println("len/2:", length/2)
+	fmt.Println("anArray", anArray)
+	left :=  divide(anArray[:length/2])
+	right := divide(anArray[length/2:])
+
+	//divide(left)
+	//divide(right)
+
+	//fmt.Println("anArray", anArray)
+	//fmt.Println("len:", length)
+	//fmt.Println("len/2:", length/2)
+
 
 	//return anArray
-	return merge(anArray[0:length/2], anArray[length/2:])
+	return merge(left, right)
 }
 
-func merge(lArray []int, rArray []int) []int {
+func merge(left []int, right []int) []int {
 	/*if len(anArray) == 0 {
 		return anArray
 	}*/
-	sortedArray := []int{}
+	lenLeft   := len(left)
+	lenRight  := len(right)
 
-	sortedArray
+	posSorted := 0
+	posLeft   := 0
+	posRight  := 0
 
-	return lArray
+	fmt.Println("left", left)
+	fmt.Println("right", right)
+	//fmt.Println("sortedarray", sortedArray)
+
+	var sortedArray []int
+
+	for posLeft < lenLeft && posRight < lenRight {
+
+		if left[posLeft] > right[posRight] {
+			sortedArray[posSorted] = right[posRight]
+			posRight++
+		} else {
+			sortedArray[posSorted] = left[posLeft]
+			posRight++
+		}
+		posSorted++
+	}
+
+	for posLeft <= lenLeft {
+		sortedArray[posSorted] = right[posRight]
+		posRight++
+		posSorted++
+	}
+
+	for posRight <= lenRight {
+		sortedArray[posSorted] = left[posLeft]
+		posLeft++
+		posSorted++
+	}
+
+
+	return sortedArray
 }
