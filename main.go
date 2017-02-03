@@ -1,8 +1,6 @@
-package main
+package GoMergeSort
 
 import "fmt"
-
-
 
 func main() {
 	fmt.Println("Hello World")
@@ -11,82 +9,62 @@ func main() {
 
 	b := []int{}
 
-	b = divide(a[0:])
-	//b = a[0:3]
+	b = MergeSort(a[0:])
 
 	fmt.Println("a", a)
 	fmt.Println("b", b)
-
-
 }
 
-//sortedArray := []int
+func MergeSort(unsorted []int) []int {
+	return Divide(unsorted)
+}
 
-func divide(anArray []int) []int {
+func Divide(anArray []int) []int {
 
 	length := len(anArray)
+
+	middle := length / 2
 
 	if length < 2 {
 		return anArray
 	}
 
-	fmt.Println("anArray", anArray)
-	left :=  divide(anArray[:length/2])
-	right := divide(anArray[length/2:])
+	left :=  Divide(anArray[:middle])
+	right := Divide(anArray[middle:])
 
-	//divide(left)
-	//divide(right)
-
-	//fmt.Println("anArray", anArray)
-	//fmt.Println("len:", length)
-	//fmt.Println("len/2:", length/2)
-
-
-	//return anArray
-	return merge(left, right)
+	return Merge(left, right)
 }
 
-func merge(left []int, right []int) []int {
-	/*if len(anArray) == 0 {
-		return anArray
-	}*/
+func Merge(left []int, right []int) []int {
+
 	lenLeft   := len(left)
 	lenRight  := len(right)
 
-	posSorted := 0
+	sortedSlice := make([]int, lenLeft + lenRight)
+
 	posLeft   := 0
 	posRight  := 0
 
-	fmt.Println("left", left)
-	fmt.Println("right", right)
-	//fmt.Println("sortedarray", sortedArray)
-
-	var sortedArray []int
-
 	for posLeft < lenLeft && posRight < lenRight {
 
-		if left[posLeft] > right[posRight] {
-			sortedArray[posSorted] = right[posRight]
-			posRight++
+		if left[posLeft] <= right[posRight] {
+			sortedSlice[posLeft + posRight] = left[posLeft]
+			posLeft++
 		} else {
-			sortedArray[posSorted] = left[posLeft]
+			sortedSlice[posLeft + posRight] = right[posRight]
 			posRight++
 		}
-		posSorted++
 	}
 
-	for posLeft <= lenLeft {
-		sortedArray[posSorted] = right[posRight]
-		posRight++
-		posSorted++
-	}
-
-	for posRight <= lenRight {
-		sortedArray[posSorted] = left[posLeft]
+	for posLeft < lenLeft {
+		sortedSlice[posLeft + posRight] = left[posLeft]
 		posLeft++
-		posSorted++
 	}
 
+	for posRight < lenRight {
+		sortedSlice[posLeft + posRight] = right[posRight]
+		posRight++
+	}
 
-	return sortedArray
+	return sortedSlice
 }
