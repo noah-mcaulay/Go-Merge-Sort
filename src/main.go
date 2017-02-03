@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Main function that includes a simple print statement for visible verification.
 func main() {
 
 	a := [11]int{6, 2, 3, 5, 10, 8, 12, 1, 0, 7, 4}
@@ -30,7 +31,7 @@ func Divide(anArray []int) []int {
 		return anArray
 	}
 
-	left :=  Divide(anArray[:middle])
+	left := Divide(anArray[:middle])
 	right := Divide(anArray[middle:])
 
 	return Merge(left, right)
@@ -40,32 +41,32 @@ func Divide(anArray []int) []int {
 // TODO: See if creating a global slice that the sorted values are placed into will improve performance
 func Merge(left []int, right []int) []int {
 
-	lenLeft   := len(left)
-	lenRight  := len(right)
+	lenLeft := len(left)
+	lenRight := len(right)
 
-	sortedSlice := make([]int, lenLeft + lenRight)
+	sortedSlice := make([]int, lenLeft+lenRight)
 
-	posLeft   := 0
-	posRight  := 0
+	posLeft := 0
+	posRight := 0
 
 	for posLeft < lenLeft && posRight < lenRight {
 
 		if left[posLeft] <= right[posRight] {
-			sortedSlice[posLeft + posRight] = left[posLeft]
+			sortedSlice[posLeft+posRight] = left[posLeft]
 			posLeft++
 		} else {
-			sortedSlice[posLeft + posRight] = right[posRight]
+			sortedSlice[posLeft+posRight] = right[posRight]
 			posRight++
 		}
 	}
 
 	for posLeft < lenLeft {
-		sortedSlice[posLeft + posRight] = left[posLeft]
+		sortedSlice[posLeft+posRight] = left[posLeft]
 		posLeft++
 	}
 
 	for posRight < lenRight {
-		sortedSlice[posLeft + posRight] = right[posRight]
+		sortedSlice[posLeft+posRight] = right[posRight]
 		posRight++
 	}
 
