@@ -1,9 +1,8 @@
-package GoMergeSort
+package main
 
 import "fmt"
 
 func main() {
-	fmt.Println("Hello World")
 
 	a := [11]int{6, 2, 3, 5, 10, 8, 12, 1, 0, 7, 4}
 
@@ -15,10 +14,12 @@ func main() {
 	fmt.Println("b", b)
 }
 
+// MergeSort entrance that is passed "unsorted" and returns a sorted slice
 func MergeSort(unsorted []int) []int {
 	return Divide(unsorted)
 }
 
+// Divide splits anArray into slices and then calls Merge
 func Divide(anArray []int) []int {
 
 	length := len(anArray)
@@ -35,6 +36,8 @@ func Divide(anArray []int) []int {
 	return Merge(left, right)
 }
 
+// Merge sorts the left and right slices and returns the sortedSlice
+// TODO: See if creating a global slice that the sorted values are placed into will improve performance
 func Merge(left []int, right []int) []int {
 
 	lenLeft   := len(left)
