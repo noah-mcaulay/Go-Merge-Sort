@@ -6,6 +6,7 @@ import "sort"
 
 
 // TODO: Use table driven test set to make this function "elegant"
+// TODO: Split unit tests into own folder and configure Gogland
 
 // Tests for MergeSort function
 // (tests divide and merge as well, so for time purposes I will just use this single func)
