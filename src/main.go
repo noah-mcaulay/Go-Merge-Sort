@@ -1,18 +1,45 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+	"math/rand"
+	"sort"
+)
 
 // Main function that includes a simple print statement for visible verification.
 func main() {
 
-	a := [11]int{6, 2, 3, 5, 10, 8, 12, 1, 0, 7, 4}
+	const PROBLEM_SIZE = 10
+	const NUM_RUNS = 1
 
-	b := []int{}
+	rand.Seed(42)
 
-	b = MergeSort(a[0:])
+	var totalTime time.Duration
 
-	fmt.Println("a", a)
-	fmt.Println("b", b)
+	anArray := [PROBLEM_SIZE]int {}
+
+	for run := 0; run < NUM_RUNS; run++ {
+
+		//fmt.Println(cap(anArray), len(anArray))
+
+		for index := 0; index < len(anArray); index++ {
+			anArray[index] = rand.Int()
+		}
+
+		before := time.Now()
+
+		MergeSort(anArray[0:])
+
+		fmt.Println("Run: ", run, "Duration: ", time.Now().Sub(before))
+		totalTime += time.Now().Sub(before)
+
+		if sort.IntsAreSorted(anArray[0:]) {
+			fmt.Println("Run 0:", run, "is sorted correctly.")
+		}
+	}
+
+	fmt.Println("The average duration for ", NUM_RUNS, " runs is: ", totalTime / NUM_RUNS)
 }
 
 // MergeSort entrance that is passed "unsorted" and returns a sorted slice
