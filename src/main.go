@@ -7,11 +7,16 @@ import (
 	"sort"
 )
 
+const PROBLEM_SIZE = 10000000
+
+// Global sorted array for increased performance in Merge section
+var sortedArray = [PROBLEM_SIZE]int {}
+
 // Main function that includes a simple print statement for visible verification.
 func main() {
 
-	const PROBLEM_SIZE = 10
-	const NUM_RUNS = 1
+	//const PROBLEM_SIZE = 10000000
+	const NUM_RUNS = 5
 
 	rand.Seed(42)
 
@@ -20,8 +25,6 @@ func main() {
 	anArray := [PROBLEM_SIZE]int {}
 
 	for run := 0; run < NUM_RUNS; run++ {
-
-		//fmt.Println(cap(anArray), len(anArray))
 
 		for index := 0; index < len(anArray); index++ {
 			anArray[index] = rand.Int()
