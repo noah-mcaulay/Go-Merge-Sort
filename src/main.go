@@ -29,12 +29,12 @@ func main() {
 
 		before := time.Now()
 
-		MergeSort(anArray[0:])
+		sortedArray := MergeSort(anArray[0:])
 
 		fmt.Println("Run: ", run, "Duration: ", time.Now().Sub(before))
 		totalTime += time.Now().Sub(before)
 
-		if sort.IntsAreSorted(anArray[0:]) {
+		if sort.IntsAreSorted(sortedArray[0:]) {
 			fmt.Println("Run 0:", run, "is sorted correctly.")
 		}
 	}
@@ -65,12 +65,12 @@ func Divide(anArray []int) []int {
 }
 
 // Merge sorts the left and right slices and returns the sortedSlice
-// TODO: See if creating a global slice that the sorted values are placed into will improve performance
 func Merge(left []int, right []int) []int {
 
 	lenLeft := len(left)
 	lenRight := len(right)
 
+	// TODO: Add a global slice that the sorted values are inserted into for increased performance
 	sortedSlice := make([]int, lenLeft+lenRight)
 
 	posLeft := 0
