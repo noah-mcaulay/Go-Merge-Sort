@@ -7,16 +7,11 @@ import (
 	"sort"
 )
 
-const PROBLEM_SIZE = 10000000
-
-// Global sorted array for increased performance in Merge section
-var sortedArray = [PROBLEM_SIZE]int {}
-
-// Main function that includes a simple print statement for visible verification.
+// Main function that includes simple benchmarking.
 func main() {
 
-	//const PROBLEM_SIZE = 10000000
-	const NUM_RUNS = 5
+	const PROBLEM_SIZE = 10000000
+	const NUM_RUNS = 10
 
 	rand.Seed(42)
 
@@ -42,12 +37,17 @@ func main() {
 		}
 	}
 
-	fmt.Println("The average duration for ", NUM_RUNS, " runs is: ", totalTime / NUM_RUNS)
+	fmt.Println("The average duration for ", NUM_RUNS, " runs of ", PROBLEM_SIZE, " is: ", totalTime / NUM_RUNS)
 }
 
-// MergeSort entrance that is passed "unsorted" and returns a sorted slice
+// MergeSort entrance that is passed "unsorted" and returns a sorted slice (also checks if the passed in array is too small)
 func MergeSort(unsorted []int) []int {
-	return Divide(unsorted)
+
+	if len(unsorted) < 2 {
+		return unsorted
+	} else {
+		return Divide(unsorted)
+	}
 }
 
 // Divide splits anArray into slices and then calls Merge
@@ -61,9 +61,13 @@ func Divide(anArray []int) []int {
 		return anArray
 	}
 
+	// Recursively call Divide on left side of slice
 	left := Divide(anArray[:middle])
+
+	// Recursively call Divide on right side of slice
 	right := Divide(anArray[middle:])
 
+	// Return the sorted slice of left with right
 	return Merge(left, right)
 }
 
@@ -73,12 +77,17 @@ func Merge(left []int, right []int) []int {
 	lenLeft := len(left)
 	lenRight := len(right)
 
-	// TODO: Add a global slice that the sorted values are inserted into for increased performance
+	// sortedSlice is where the sorted values are inserted and then return
+	//	(for increased performance there should be a global slice that
+	//	 is inserted into to prevent unneeded allocations)
 	sortedSlice := make([]int, lenLeft+lenRight)
 
+	// These keep track of the positions as we merge the slices into a sorted slice
 	posLeft := 0
 	posRight := 0
 
+	// While there are still items to be sorted on the left AND right:
+	// 	keep adding them to our sorted slice
 	for posLeft < lenLeft && posRight < lenRight {
 
 		if left[posLeft] <= right[posRight] {
@@ -90,11 +99,13 @@ func Merge(left []int, right []int) []int {
 		}
 	}
 
+	// While there are unsorted values in the left slice, add them to the sorted slice
 	for posLeft < lenLeft {
 		sortedSlice[posLeft+posRight] = left[posLeft]
 		posLeft++
 	}
 
+	// While there are unsorted values in the right slice, add them to the sorted slice
 	for posRight < lenRight {
 		sortedSlice[posLeft+posRight] = right[posRight]
 		posRight++
